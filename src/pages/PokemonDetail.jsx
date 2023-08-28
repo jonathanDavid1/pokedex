@@ -1,10 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { getPokemonById } from '../services/pokemons';
+import StatBarList from '../components/pokemonDetail/StatBarList';
 
 const PokemonDetail = () => {
+  const [pokemonData, setPokemonData] = useState(null)
+
+  const {pokemonId} = useParams();
+
+  useEffect(() => {
+    getPokemonById(pokemonId)
+    .then((data) => setPokemonData(data))
+    .catch((err) => console.log(err));
+  }, [])
+  
   return (
-    <div>
+    <main className='flex items-center justify-center'>
+
+      <article className='w-[min(100%,_400px)]'>
+       <header>
+        <div>
+          <img src={pokemonData?.image} alt="" />
+        </div>
+       </header>
+       <section>
+        <span>#{pokemonData?.id}</span>
+        <StatBarList stats={pokemonData?.stats} />
+       </section>
+      </article>
       
-    </div>
+    </main>
   )
 }
 

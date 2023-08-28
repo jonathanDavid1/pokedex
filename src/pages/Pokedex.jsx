@@ -1,34 +1,40 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { getAllPokemons } from '../services/pokemons';
 import PokemonList from '../components/pokedex/PokemonList';
+import usePodedex from '../hooks/usePokedex';
+import usePokedex from '../hooks/usePokedex';
 
 const Pokedex = () => {
-  const [pokemons, setPokemons] = useState([])
-  const { name } = useSelector(store => store.trainer);
 
+  const { 
+    name, 
+    pokemonName,
+    setPokemonName,
+    pokemonType,
+    setPokemonType, 
+    handleChange,
+    pokemonsByName
+  } = usePokedex();
 
-  useEffect(() => {
-    getAllPokemons()
-    .then((data) => setPokemons(data))
-    .catch((err) => console.log(err));
-  }, [])
   return (
     <main>
       <section>
         <p><span>welcome {name}</span></p>
         <form>
           <div>
-            <input placeholder='Search pokemon...' type="text" />
-            <button>Search</button>
+            <input 
+            value={pokemonName}
+            onChange={handleChange(setPokemonName)}
+            placeholder='Search pokemon...' type="text" />
+            {/* <button>Search</button> */}
           </div>
 
-          <select>
-            <option value="">All pokemons</option>
+          <select value={pokemonType} onChange={handleChange(setPokemonType)}>
+            <option>All pokemons</option>
+            <option value="rock">Rock</option>
           </select>
         </form>
       </section>
-      <PokemonList pokemons= {pokemons}/>
+      <PokemonList pokemons={pokemonsByName} />
     </main>
   )
 }
