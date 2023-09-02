@@ -1,53 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { getAllPokemons, getPokemonsByType } from '../services/pokemons';
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { getAllPokemons, getAllTypes, getPokemonsByType } from "../services/pokemons"
+
 
 const usePokedex = () => {
-  
-  const [pokemons, setPokemons] = useState([]);
-  const [pokemonName, setPokemonName] = useState("");
-  const [pokemonType, setPokemonType] = useState("");
+    const [pokemons, setPokemons] = useState([])
+    const [pokemonName, setPokemonName] = useState('')
+    const [pokemonType, setPokemonType] = useState('')
+    const [pokemonLimit, setPokemonLimit] = useState(0)
+    const [types, setTypes] = useState([])
 
-  const { name } = useSelector(store => store.trainer);
+    const { name } = useSelector(store => store.trainer)
 
-  // const handleChangeInput = (e) => {
-  //   setPokemonName(e.target.value)
-  // }
-
-  // const handleChangeSelect = (e) => {
-  //   setPokemonType(e.target.value)
-  // }
-  const handleChange = (setState) => (e) => {
-    setState(e.target.value);
-  };
-
-  const pokemonsByName = pokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(pokemonName.toLowerCase()));
-
-  useEffect(() => {
-    if(!pokemonType){
-      getAllPokemons()
-        .then((data) => setPokemons(data))
-        .catch((err) => console.log(err));
+    const handleChange = (setState) => (e) => {
+        setState(e.target.value)
     }
-  }, [pokemonType]);
 
-  useEffect(() => {
-    if (pokemonType) {
-      //Para hacer la peticion de los pokemos por 
-      getPokemonsByType(pokemonType).then((data) => setPokemons(data))
+    const pokemonByName = pokemons.filter((pokemon) =>
+        pokemon.name.toLowerCase().includes(pokemonName.toLowerCase())
+    );
+
+    useEffect(() => {
+        if (!pokemonType) {
+            getAllPokemons()
+                .then((data) => setPokemons(data))
+                .catch((err) => console.log(err))
+        }
+    }, [pokemonType]);
+
+    useEffect(() => {
+        if (pokemonType) {
+            getPokemonsByType(pokemonType).then((data) => setPokemons(data))
+        }
+    }, [pokemonType])
+
+    useEffect(() => {
+        getAllTypes().then((data) => setTypes(data))
+            .catch((err) => console.log(err))
+    }, [])
+
+    return {
+        handleChange,
+        name,
+        pokemonName,
+        handleChange,
+        setPokemonName,
+        pokemonType,
+        setPokemonType,
+        pokemonByName,
+        types
     }
-  }, [pokemonType])
-  
 
-  return {
-    name,
-    pokemonName,
-    setPokemonName,
-    pokemonType,
-    setPokemonType,
-    handleChange,
-    pokemonsByName,
-  }
 }
+
 
 export default usePokedex

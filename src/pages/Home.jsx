@@ -17,17 +17,17 @@ const Home = () => {
     }
   return (
     <main>
-        <section className='min-h-screen grid  grid-rows-[1fr_auto'>
-
-              <article>
+        <section className="min-h-screen flex flex-col justify-around items-center bg-cover bg-center text-white">
+              <article className="flex flex-col justify-center items-center gap-2 p-2 py-2 rounded-md">
                 <div>
                     <img src="/images/banner.png" alt="" />
                 </div>
-                <h2>Hello trainer!</h2>
-                <p>To start give me your name</p>
+                <h2 className='text-red-600 text-2xl font-bold'>Hello trainer!</h2>
+                <p className='text-[#302F2F] font-medium]'>To start give me your name</p>
                 <form onSubmit={handleSubmit}>   
-                    <input autoComplete='off' placeholder='your name...' required id='nameTrainer' type="text" />
-                    <button></button>
+                    <input className='outline-none p-2 px-4 h-10 text-black border-gray border-[1px]'
+                     autoComplete='off' placeholder='your name...' required id='nameTrainer' type="text" />
+                    <button className=' bg-red-600 rounded-sm w-[90px] p-2'>start</button>
                 </form>
                 
               </article>   
