@@ -29,7 +29,7 @@ const PokemonDetail = () => {
         </div>
       </section>
     
-    <main className='flex items-center justify-center'>
+    <main className='flex items-center justify-center mb-[20px]'>
 
       <article className='w-[min(100%,_400px)]'>
        <header>

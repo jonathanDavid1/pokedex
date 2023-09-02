@@ -3,7 +3,7 @@ import BarProgresStat from './BarProgresStat'
 
 const StatBarList = ({stats}) => {
   return (
-    <section>
+    <section className='mb-5'>
         <h2>Stats</h2>
         <section>
             {
